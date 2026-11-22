@@ -98,9 +98,14 @@ sh("git", ["commit", "-q", "-m", `Release ${tag}\n\n${notes}`]);
 sh("git", ["tag", "-a", tag, "-m", notes]);
 console.log(`✓ Built ${file}, created commit and tag ${tag}.\n${notes}`);
 
+// origin is the main repository (git.leipzig.schule); "github" is the public mirror
+// that serves the plugin marketplace, pushed too when that remote exists.
+const remotes = ["origin", ...(sh("git", ["remote"]).split("\n").includes("github") ? ["github"] : [])];
 if (push) {
-  sh("git", ["push", "--atomic", "origin", "main", tag], { inherit: true });
-  console.log("✓ Pushed.");
+  for (const remote of remotes) {
+    sh("git", ["push", "--atomic", remote, "main", tag], { inherit: true });
+    console.log(`✓ Pushed to ${remote}.`);
+  }
 } else {
-  console.log(`Not pushed. Later: git push --atomic origin main ${tag}`);
+  console.log(`Not pushed. Later: ${remotes.map((r) => `git push --atomic ${r} main ${tag}`).join(" && ")}`);
 }

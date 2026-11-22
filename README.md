@@ -76,7 +76,7 @@ claude mcp add rocketchat -e ROCKETCHAT_URL=https://chat.example.org -e ROCKETCH
 
 ## Releases
 
-Requires a Git repository with branch `main` and remote `origin`.
+The main repository is <https://git.leipzig.schule/agentassist/claudeextensions/rocketchat-connector> (remote `origin`); <https://github.com/Tranquillius/rocketchat-connector> (remote `github`) is the public mirror that serves the plugin marketplace and the download links. Releases need branch `main`; the release script pushes to `origin` and, if present, `github`.
 
 ```bash
 npm run release -- patch
@@ -84,7 +84,7 @@ npm run release -- patch
 
 Instead of `patch`, use `minor`, `major` or an explicit version (`0.2.0`). Optional `-m "notes"`; otherwise the commit subjects since the last release become the notes. `--no-push` keeps everything local.
 
-The script sets the version in `package.json`, `manifest.json`, `plugin/.claude-plugin/plugin.json` and `plugin/server/version.js`, runs the tests and the manifest validation, builds `releases/rocketchat-connector-X.Y.Z.mcpb` and `releases/rocketchat-connector-latest.mcpb`, commits, tags `vX.Y.Z` and pushes.
+The script sets the version in `package.json`, `manifest.json`, `plugin/.claude-plugin/plugin.json` and `plugin/server/version.js`, runs the tests and the manifest validation, builds `releases/rocketchat-connector-X.Y.Z.mcpb` and `releases/rocketchat-connector-latest.mcpb`, commits, tags `vX.Y.Z` and pushes to both remotes.
 
 ## License
 
