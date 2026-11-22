@@ -1,0 +1,189 @@
+{
+  "manifest_version": "0.3",
+  "name": "rocketchat-connector",
+  "display_name": "Rocket.Chat Connector",
+  "version": "0.1.0",
+  "icon": "icon.png",
+  "description": "Rocket.Chat rooms, messages, threads and mentions as context for tasks and digests – optionally also for replying.",
+  "long_description": "Connects Claude to the Rocket.Chat team chat via the REST API, using the user's own account. Read: the user's rooms with unread counters, messages and threads, full-text search across rooms, mentions, an unread overview for scheduled digests, directory and users. Write, in four groups that can each be switched off: send messages; reactions, read state and pinning; edit own messages; create and manage rooms. Deleting is not supported.",
+  "author": {
+    "name": "Alexander von Schmidsfeld",
+    "email": "git@von-schmidsfeld.net",
+    "url": "https://github.com/Tranquillius"
+  },
+  "homepage": "https://github.com/Tranquillius/rocketchat-connector",
+  "documentation": "https://github.com/Tranquillius/rocketchat-connector#readme",
+  "support": "https://github.com/Tranquillius/rocketchat-connector/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tranquillius/rocketchat-connector.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "rocketchat",
+    "chat",
+    "team-chat",
+    "messages",
+    "notifications"
+  ],
+  "privacy_policies": ["https://github.com/Tranquillius/rocketchat-connector/blob/main/plugin/PRIVACY.md"],
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/server/index.js"],
+      "env": {
+        "ROCKETCHAT_URL": "${user_config.rocketchat_url}",
+        "ROCKETCHAT_USER_ID": "${user_config.user_id}",
+        "ROCKETCHAT_AUTH_TOKEN": "${user_config.auth_token}",
+        "ROCKETCHAT_READ_ONLY": "${user_config.read_only}",
+        "ROCKETCHAT_ALLOW_SEND": "${user_config.allow_send}",
+        "ROCKETCHAT_ALLOW_REACTIONS": "${user_config.allow_reactions}",
+        "ROCKETCHAT_ALLOW_EDIT": "${user_config.allow_edit}",
+        "ROCKETCHAT_ALLOW_ROOMS": "${user_config.allow_rooms}",
+        "ROCKETCHAT_DEFAULT_LIMIT": "${user_config.default_limit}",
+        "ROCKETCHAT_MAX_BODY_CHARS": "${user_config.max_body_chars}",
+        "ROCKETCHAT_TIMEOUT_MS": "${user_config.timeout_ms}"
+      }
+    }
+  },
+  "user_config": {
+    "rocketchat_url": {
+      "type": "string",
+      "title": "Rocket.Chat URL",
+      "description": "Base URL of the Rocket.Chat server (without /api/v1), e.g. https://chat.example.org.",
+      "required": true
+    },
+    "user_id": {
+      "type": "string",
+      "title": "User ID",
+      "description": "Shown when creating the personal access token (Rocket.Chat → Profile → Personal Access Tokens).",
+      "required": true
+    },
+    "auth_token": {
+      "type": "string",
+      "title": "Personal access token",
+      "description": "Rocket.Chat → Profile → Personal Access Tokens → add (enable \"Ignore Two Factor Authentication\"). The agent can see all rooms and direct messages of this account.",
+      "sensitive": true,
+      "required": true
+    },
+    "read_only": {
+      "type": "boolean",
+      "title": "Read only",
+      "description": "Offer no write tools (overrides the four switches below).",
+      "default": false,
+      "required": false
+    },
+    "allow_send": {
+      "type": "boolean",
+      "title": "Send messages",
+      "description": "Post to channels, groups, threads and direct messages – on behalf of the user.",
+      "default": true,
+      "required": false
+    },
+    "allow_reactions": {
+      "type": "boolean",
+      "title": "Reactions, read state, pinning",
+      "description": "Add emoji reactions, mark rooms as read, pin or star messages.",
+      "default": true,
+      "required": false
+    },
+    "allow_edit": {
+      "type": "boolean",
+      "title": "Edit own messages",
+      "description": "Change the text of the user's own messages (no deleting).",
+      "default": false,
+      "required": false
+    },
+    "allow_rooms": {
+      "type": "boolean",
+      "title": "Create and manage rooms",
+      "description": "Create channels/groups, invite users, set topic/description/announcement.",
+      "default": false,
+      "required": false
+    },
+    "default_limit": {
+      "type": "number",
+      "title": "Default result count",
+      "description": "How many messages or rooms queries return by default (1–500).",
+      "default": 50,
+      "min": 1,
+      "max": 500,
+      "required": false
+    },
+    "max_body_chars": {
+      "type": "number",
+      "title": "Max. characters per message",
+      "description": "Longer messages and attachments are truncated to save context.",
+      "default": 4000,
+      "min": 200,
+      "max": 100000,
+      "required": false
+    },
+    "timeout_ms": {
+      "type": "number",
+      "title": "Timeout (ms)",
+      "description": "Time limit per API call.",
+      "default": 30000,
+      "min": 1000,
+      "max": 300000,
+      "required": false
+    }
+  },
+  "tools": [
+    { "name": "rocketchat_whoami", "description": "Show current user / test connection" },
+    { "name": "rocketchat_list_rooms", "description": "List my rooms with unread counters" },
+    { "name": "rocketchat_get_room", "description": "Get a room with topic, team and members" },
+    { "name": "rocketchat_get_messages", "description": "Read messages of a room or thread" },
+    { "name": "rocketchat_list_threads", "description": "List threads of a room" },
+    { "name": "rocketchat_search_messages", "description": "Search messages in one or many rooms" },
+    { "name": "rocketchat_unread_overview", "description": "Unread messages and mentions for digests" },
+    { "name": "rocketchat_list_mentions", "description": "Mentions of the user across rooms" },
+    { "name": "rocketchat_search_directory", "description": "Search users, channels and teams" },
+    { "name": "rocketchat_get_user", "description": "Get user details" },
+    { "name": "rocketchat_api_get", "description": "Read-only raw API access" },
+    { "name": "rocketchat_send_message", "description": "Send a message to a room, thread or DM" },
+    { "name": "rocketchat_react", "description": "Add or remove an emoji reaction" },
+    { "name": "rocketchat_mark_read", "description": "Mark rooms as read" },
+    { "name": "rocketchat_flag_message", "description": "Pin or star a message" },
+    { "name": "rocketchat_update_message", "description": "Edit own message" },
+    { "name": "rocketchat_create_room", "description": "Create a channel or private group" },
+    { "name": "rocketchat_invite_users", "description": "Invite users to a room" },
+    { "name": "rocketchat_update_room", "description": "Set topic, description, announcement" }
+  ],
+  "prompts": [
+    {
+      "name": "rocketchat_daily_digest",
+      "description": "Digest of all unread messages",
+      "arguments": ["focus"],
+      "text": "Create a compact digest of my unread Rocket.Chat messages (focus: ${arguments.focus}). Use rocketchat_unread_overview and, where needed, rocketchat_get_messages. Structure: mentions and direct messages, decisions and news per room, the rest briefly. Do not mark anything as read and do not send anything."
+    },
+    {
+      "name": "rocketchat_room_summary",
+      "description": "Summary of a room for a period",
+      "arguments": [
+        "room",
+        "since"
+      ],
+      "text": "Summarize the Rocket.Chat room \"${arguments.room}\" since ${arguments.since} (rocketchat_get_room, rocketchat_get_messages, rocketchat_list_threads): topics, decisions, open tasks, links. Do not send anything."
+    },
+    {
+      "name": "rocketchat_my_mentions",
+      "description": "Mentions that may need a response",
+      "arguments": ["since"],
+      "text": "List my Rocket.Chat mentions since ${arguments.since} (rocketchat_list_mentions), check for threads whether I replied, and put unanswered questions first. Do not send anything."
+    }
+  ],
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "name": "rocketchat-connector",
+  "displayName": "Rocket.Chat Connector",
+  "version": "0.1.0",
+  "description": "Rocket.Chat rooms, messages, threads and mentions as context for tasks and digests – optionally also for replying.",
+  "author": {
+    "name": "Alexander von Schmidsfeld",
+    "email": "git@von-schmidsfeld.net",
+    "url": "https://github.com/Tranquillius"
+  },
+  "homepage": "https://github.com/Tranquillius/rocketchat-connector",
+  "repository": "https://github.com/Tranquillius/rocketchat-connector",
+  "license": "MIT",
+  "keywords": [
+    "rocketchat",
+    "chat",
+    "team-chat",
+    "messages",
+    "notifications"
+  ],
+  "icon": "./icon.png",
+  "documentationUrl": "https://github.com/Tranquillius/rocketchat-connector/blob/main/plugin/README.md",
+  "supportUrl": "https://github.com/Tranquillius/rocketchat-connector/issues",
+  "privacyPolicyUrl": "https://github.com/Tranquillius/rocketchat-connector/blob/main/plugin/PRIVACY.md",
+  "userConfig": {
+    "rocketchat_url": {
+      "type": "string",
+      "title": "Rocket.Chat URL",
+      "description": "Base URL of the Rocket.Chat server (without /api/v1), e.g. https://chat.example.org.",
+      "required": true
+    },
+    "user_id": {
+      "type": "string",
+      "title": "User ID",
+      "description": "Shown when creating the personal access token (Rocket.Chat → Profile → Personal Access Tokens).",
+      "required": true
+    },
+    "auth_token": {
+      "type": "string",
+      "title": "Personal access token",
+      "description": "Rocket.Chat → Profile → Personal Access Tokens → add (enable \"Ignore Two Factor Authentication\"). The agent can see all rooms and direct messages of this account.",
+      "required": true,
+      "sensitive": true
+    },
+    "read_only": {
+      "type": "boolean",
+      "title": "Read only",
+      "description": "Offer no write tools (overrides the four switches below).",
+      "required": false,
+      "default": false
+    },
+    "allow_send": {
+      "type": "boolean",
+      "title": "Send messages",
+      "description": "Post to channels, groups, threads and direct messages – on behalf of the user.",
+      "required": false,
+      "default": true
+    },
+    "allow_reactions": {
+      "type": "boolean",
+      "title": "Reactions, read state, pinning",
+      "description": "Add emoji reactions, mark rooms as read, pin or star messages.",
+      "required": false,
+      "default": true
+    },
+    "allow_edit": {
+      "type": "boolean",
+      "title": "Edit own messages",
+      "description": "Change the text of the user's own messages (no deleting).",
+      "required": false,
+      "default": false
+    },
+    "allow_rooms": {
+      "type": "boolean",
+      "title": "Create and manage rooms",
+      "description": "Create channels/groups, invite users, set topic/description/announcement.",
+      "required": false,
+      "default": false
+    },
+    "default_limit": {
+      "type": "number",
+      "title": "Default result count",
+      "description": "How many messages or rooms queries return by default (1–500).",
+      "required": false,
+      "default": 50,
+      "min": 1,
+      "max": 500
+    },
+    "max_body_chars": {
+      "type": "number",
+      "title": "Max. characters per message",
+      "description": "Longer messages and attachments are truncated to save context.",
+      "required": false,
+      "default": 4000,
+      "min": 200,
+      "max": 100000
+    },
+    "timeout_ms": {
+      "type": "number",
+      "title": "Timeout (ms)",
+      "description": "Time limit per API call.",
+      "required": false,
+      "default": 30000,
+      "min": 1000,
+      "max": 300000
+    }
+  }
+}

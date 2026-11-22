@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.mcpb
+.DS_Store
+
+# Releases werden bewusst eingecheckt
+!releases/*.mcpb

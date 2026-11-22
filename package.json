@@ -1,0 +1,20 @@
+{
+  "name": "rocketchat-connector",
+  "version": "0.1.0",
+  "description": "MCP server and Claude plugin for Rocket.Chat: rooms, messages, threads, mentions and unread overviews via the REST API – no runtime dependencies.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node plugin/server/index.js",
+    "test": "node --test test/*.test.js",
+    "validate": "node scripts/build.mjs --validate",
+    "validate:plugin": "claude plugin validate plugin --profile directory --strict",
+    "pack": "node scripts/build.mjs",
+    "release": "node scripts/release.mjs"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/Tranquillius/rocketchat-connector"
+}

@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "rocketchat": {
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/server/index.js"
+      ],
+      "env": {
+        "ROCKETCHAT_URL": "${user_config.rocketchat_url}",
+        "ROCKETCHAT_USER_ID": "${user_config.user_id}",
+        "ROCKETCHAT_AUTH_TOKEN": "${user_config.auth_token}",
+        "ROCKETCHAT_READ_ONLY": "${user_config.read_only}",
+        "ROCKETCHAT_ALLOW_SEND": "${user_config.allow_send}",
+        "ROCKETCHAT_ALLOW_REACTIONS": "${user_config.allow_reactions}",
+        "ROCKETCHAT_ALLOW_EDIT": "${user_config.allow_edit}",
+        "ROCKETCHAT_ALLOW_ROOMS": "${user_config.allow_rooms}",
+        "ROCKETCHAT_DEFAULT_LIMIT": "${user_config.default_limit}",
+        "ROCKETCHAT_MAX_BODY_CHARS": "${user_config.max_body_chars}",
+        "ROCKETCHAT_TIMEOUT_MS": "${user_config.timeout_ms}"
+      }
+    }
+  }
+}

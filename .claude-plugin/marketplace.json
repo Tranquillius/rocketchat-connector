@@ -1,0 +1,17 @@
+{
+  "name": "rocketchat-connector",
+  "owner": {
+    "name": "Alexander von Schmidsfeld",
+    "email": "git@von-schmidsfeld.net"
+  },
+  "metadata": {
+    "description": "Rocket.Chat connector for Claude: chat context, digests and replies via the Rocket.Chat REST API."
+  },
+  "plugins": [
+    {
+      "name": "rocketchat-connector",
+      "source": "./plugin",
+      "description": "Rocket.Chat rooms, messages, threads and mentions as context for tasks and digests – optionally also for replying."
+    }
+  ]
+}
