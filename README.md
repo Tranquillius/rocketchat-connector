@@ -17,13 +17,15 @@ Install the plugin straight from this repository:
 /plugin install rocketchat-connector --marketplace Tranquillius/rocketchat-connector
 ```
 
+The plugin is not listed in the Claude directory: the directory accepts plugins with local MCP servers only from verified organizations.
+
 The server in [`plugin/server/`](plugin/server/) is plain Node.js (18+) without third-party packages. It includes a minimal MCP implementation (`mcp.js`, stdio JSON-RPC with tools and prompts) and argument schemas (`schema.js`).
 
 ## Repository layout
 
 ```
 .claude-plugin/marketplace.json   lists the plugin for /plugin install
-plugin/                           the plugin as submitted to the directory
+plugin/                           the plugin (Claude Code, Cowork)
   .claude-plugin/plugin.json
   .mcp.json                       starts node ${CLAUDE_PLUGIN_ROOT}/server/index.js
   server/                         MCP server (source, no dependencies)

@@ -1,13 +1,33 @@
 // Reads the configuration from environment variables.
 // The plugin (.mcp.json) and the desktop extension (manifest.json) fill them from the user settings.
 
+// Plugin option keys (CLAUDE_PLUGIN_OPTION_<KEY>, as passed by .mcp.json) for each ROCKETCHAT_* variable.
+const PLUGIN_OPTION = {
+  ROCKETCHAT_URL: "ROCKETCHAT_URL",
+  ROCKETCHAT_USER_ID: "USER_ID",
+  ROCKETCHAT_AUTH_TOKEN: "AUTH_TOKEN",
+  ROCKETCHAT_READ_ONLY: "READ_ONLY",
+  ROCKETCHAT_ALLOW_SEND: "ALLOW_SEND",
+  ROCKETCHAT_ALLOW_REACTIONS: "ALLOW_REACTIONS",
+  ROCKETCHAT_ALLOW_EDIT: "ALLOW_EDIT",
+  ROCKETCHAT_ALLOW_ROOMS: "ALLOW_ROOMS",
+  ROCKETCHAT_DEFAULT_LIMIT: "DEFAULT_LIMIT",
+  ROCKETCHAT_MAX_BODY_CHARS: "MAX_BODY_CHARS",
+  ROCKETCHAT_TIMEOUT_MS: "TIMEOUT_MS",
+};
+
 /** Returns the value, or undefined if empty or an unsubstituted ${user_config.*} placeholder. */
-function raw(env, name) {
+function value(env, name) {
   const v = env[name];
   if (v === undefined || v === null) return undefined;
   const s = String(v).trim();
   if (s === "" || /^\$\{.*\}$/.test(s)) return undefined;
   return s;
+}
+
+/** ROCKETCHAT_<NAME>, falling back to the plugin's CLAUDE_PLUGIN_OPTION_<KEY>. */
+function raw(env, name) {
+  return value(env, name) ?? (PLUGIN_OPTION[name] ? value(env, `CLAUDE_PLUGIN_OPTION_${PLUGIN_OPTION[name]}`) : undefined);
 }
 
 function bool(env, name, fallback) {
@@ -28,9 +48,9 @@ export function loadConfig(env = process.env) {
   const userId = raw(env, "ROCKETCHAT_USER_ID");
   const token = raw(env, "ROCKETCHAT_AUTH_TOKEN");
   const errors = [];
-  if (!url) errors.push("ROCKETCHAT_URL is not set.");
-  if (!userId) errors.push("ROCKETCHAT_USER_ID is not set.");
-  if (!token) errors.push("ROCKETCHAT_AUTH_TOKEN is not set.");
+  if (!url) errors.push("The Rocket.Chat URL (ROCKETCHAT_URL) is not set.");
+  if (!userId) errors.push("The user ID (ROCKETCHAT_USER_ID) is not set.");
+  if (!token) errors.push("The access token (ROCKETCHAT_AUTH_TOKEN) is not set.");
 
   let baseUrl = url;
   if (url) {

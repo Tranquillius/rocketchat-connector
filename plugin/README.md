@@ -19,16 +19,18 @@ If the menu entry is missing, your role needs the permission *create-personal-ac
 
 ### 2. Install
 
-- **Claude Code / Cowork (plugin):** install the plugin from the directory, or directly from this repository:
+- **Claude Code / Cowork (plugin):** install the plugin from this repository's marketplace (Claude Code 2.1.275 or later):
 
   ```
   /plugin install rocketchat-connector --marketplace Tranquillius/rocketchat-connector
   ```
 
-  Enter the URL, user ID and token when prompted. Cowork only loads the plugin when its session runs on your computer and the settings are filled in.
+  On older versions, first add the marketplace with `/plugin marketplace add Tranquillius/rocketchat-connector`, then run `/plugin install rocketchat-connector@rocketchat-connector`. Enter the URL, user ID and token when prompted. Cowork only loads the plugin when its session runs on your computer and the settings are filled in.
 - **Claude Desktop (extension):** download `rocketchat-connector-latest.mcpb` from the [releases](https://github.com/Tranquillius/rocketchat-connector/tree/main/releases), open it and fill in the settings. When updating, remove the old version first and restart Claude Desktop completely afterwards.
 
 ## Settings
+
+The plugin passes the settings to the server as `CLAUDE_PLUGIN_OPTION_<KEY>` (e.g. `CLAUDE_PLUGIN_OPTION_AUTH_TOKEN`); the desktop extension and manual setups use the `ROCKETCHAT_*` names below. If both are set, `ROCKETCHAT_*` wins.
 
 | Setting | Environment variable | Default | Meaning |
 |---|---|---|---|

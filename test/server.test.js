@@ -147,6 +147,18 @@ test("config: placeholders, URL normalization, write groups", () => {
   assert.deepEqual(ro.allow, { send: false, reactions: false, edit: false, rooms: false });
   assert.equal(loadConfig({ ROCKETCHAT_URL: "https://x", ROCKETCHAT_USER_ID: "x", ROCKETCHAT_AUTH_TOKEN: "y", ROCKETCHAT_ALLOW_SEND: "false" }).allow.send, false);
   assert.equal(loadConfig({}).errors.length, 3);
+
+  // Plugin option names (CLAUDE_PLUGIN_OPTION_*); ROCKETCHAT_* takes precedence
+  const p = loadConfig({
+    CLAUDE_PLUGIN_OPTION_ROCKETCHAT_URL: "https://chat.example.org",
+    CLAUDE_PLUGIN_OPTION_USER_ID: "u",
+    CLAUDE_PLUGIN_OPTION_AUTH_TOKEN: "t",
+    CLAUDE_PLUGIN_OPTION_ALLOW_EDIT: "true",
+    CLAUDE_PLUGIN_OPTION_DEFAULT_LIMIT: "20",
+    CLAUDE_PLUGIN_OPTION_READ_ONLY: "${user_config.read_only}",
+  });
+  assert.deepEqual([p.errors, p.baseUrl, p.userId, p.token, p.allow.edit, p.defaultLimit], [[], "https://chat.example.org", "u", "t", true, 20]);
+  assert.equal(loadConfig({ CLAUDE_PLUGIN_OPTION_AUTH_TOKEN: "plugin", ROCKETCHAT_AUTH_TOKEN: "env" }).token, "env");
 });
 
 test("formatting: dates, search, emoji, messages", () => {
