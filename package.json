@@ -1,6 +1,6 @@
 {
   "name": "rocketchat-connector",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP server and Claude plugin for Rocket.Chat: rooms, messages, threads, mentions and unread overviews via the REST API – no runtime dependencies.",
   "type": "module",
   "private": true,

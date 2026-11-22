@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "rocketchat-connector",
   "display_name": "Rocket.Chat Connector",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "icon": "icon.png",
   "description": "Rocket.Chat rooms, messages, threads and mentions as context for tasks and digests – optionally also for replying.",
   "long_description": "Connects Claude to the Rocket.Chat team chat via the REST API, using the user's own account. Read: the user's rooms with unread counters, messages and threads, full-text search across rooms, mentions, an unread overview for scheduled digests, directory and users. Write, in four groups that can each be switched off: send messages; reactions, read state and pinning; edit own messages; create and manage rooms. Deleting is not supported.",

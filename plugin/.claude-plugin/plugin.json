@@ -1,7 +1,7 @@
 {
   "name": "rocketchat-connector",
   "displayName": "Rocket.Chat Connector",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Rocket.Chat rooms, messages, threads and mentions as context for tasks and digests – optionally also for replying.",
   "author": {
     "name": "Alexander von Schmidsfeld",
